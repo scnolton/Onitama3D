@@ -28,7 +28,11 @@ public class MainCamera : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(2))
+        {
+            transform.LookAt(new Vector3(0,0,0));
+        }
+        if (Input.GetMouseButton(1)|| Input.GetMouseButton(2))
         {
             if (axes == RotationAxes.MouseXAndY)
             {
@@ -47,10 +51,9 @@ public class MainCamera : MonoBehaviour
                 transform.localPosition = orinalPosition + new Vector3(0f, 0f, -positionZ);
             }
         }
-        if (Input.GetAxis("Mouse ScrollWheel")>1|| Input.GetAxis("Mouse ScrollWheel") < 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 1 || Input.GetAxis("Mouse ScrollWheel") < 1)
         {
-            Debug.Log("Scroll in");
-            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView+Input.GetAxis("Mouse ScrollWheel") * sensitivityScroll, minFov, maxFov);
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView + Input.GetAxis("Mouse ScrollWheel") * sensitivityScroll, minFov, maxFov);
         }
     }
 
@@ -60,22 +63,5 @@ public class MainCamera : MonoBehaviour
         if (rb)
             rb.freezeRotation = true;
         orinalPosition = transform.localPosition;
-    }
-
-    public static float ClampAngle(float angle, float min, float max)
-    {
-        angle = angle % 360;
-        if ((angle >= -360F) && (angle <= 360F))
-        {
-            if (angle < -360F)
-            {
-                angle += 360F;
-            }
-            if (angle > 360F)
-            {
-                angle -= 360F;
-            }
-        }
-        return Mathf.Clamp(angle, min, max);
     }
 }
