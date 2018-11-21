@@ -10,6 +10,7 @@ public class MainCamera : MonoBehaviour
     public RotationAxes axes = RotationAxes.MouseXAndY;
     public float sensitivityX = 15F;
     public float sensitivityY = 15F;
+    public float sensitivityScroll = 15f;
 
     public float minimumX = -360F;
     public float maximumX = 360F;
@@ -19,6 +20,9 @@ public class MainCamera : MonoBehaviour
 
     float positionX = 0F;
     float positionZ = 0F;
+
+    float minFov = 15f;
+    float maxFov = 90f;
 
     Vector3 orinalPosition;
 
@@ -43,12 +47,10 @@ public class MainCamera : MonoBehaviour
                 transform.localPosition = orinalPosition + new Vector3(0f, 0f, -positionZ);
             }
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (Input.GetAxis("Mouse ScrollWheel")>1|| Input.GetAxis("Mouse ScrollWheel") < 1)
         {
-            Debug.Log("Pressed middle click.");
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0){
             Debug.Log("Scroll in");
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView+Input.GetAxis("Mouse ScrollWheel") * sensitivityScroll, minFov, maxFov);
         }
     }
 
